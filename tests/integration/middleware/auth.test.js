@@ -11,8 +11,6 @@ describe('auth middleware', () => {
     });
 
     let token;
-    //
-    //
 
     const exec = () => {
         return request(server)

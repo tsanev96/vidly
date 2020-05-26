@@ -1,3 +1,5 @@
 # dependencies
-/node_modules
-logfile.log
+node_modules/
+coverage/
+todos.txt
+
