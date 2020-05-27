@@ -2,11 +2,10 @@ const { Genre } = require('../../../models/genre');
 const { User } = require('../../../models/user');
 const request = require('supertest');
 const mongoose = require('mongoose');
-let server;
-
-// TODO: DELETE , PUT - invalid id
 
 describe('/api/genres', () => {
+    let server;
+
     beforeEach(() => { server = require('../../../index') });
     afterEach(async () => {
         await Genre.remove({});
@@ -55,7 +54,7 @@ describe('/api/genres', () => {
     });
 
     describe('POST /', () => {
-        // Define the happy path, and then in each test,
+        // Define (exec) the happy path, and then in each test,
         // we change one parameter that clearly aligns with the name of 
         // the test.
         let token;
