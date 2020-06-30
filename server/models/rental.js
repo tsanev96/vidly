@@ -68,6 +68,11 @@ rentalSchema.methods.calcRentalFee = function () {
 
     const rentalDays = moment().diff(this.dateOut, 'days');
     this.rentalFee = rentalDays * this.movie.dailyRentalRate;
+
+    // or
+    // const numberOfDays = rental.dateReturned - rental.dateOut;
+    // const rentalFee = numberOfDays * (rental.movie.dailyRentalRate);
+    // rental.rentalFee = rentalFee ;
 }
 
 const Rental = mongoose.model('Rental', rentalSchema);

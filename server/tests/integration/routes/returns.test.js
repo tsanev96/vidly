@@ -9,7 +9,6 @@ const moment = require('moment');
 const apiEndPoint = '/api/returns';
 
 describe('/api/returns', () => {
-    2
     let server;
     let rental;
     let customerId;
