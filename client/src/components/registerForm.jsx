@@ -1,6 +1,7 @@
 import React from 'react';
 import Form from './common/form';
 import Joi from '@hapi/joi';
+import * as userService from '../services/userService';
 
 class Register extends Form {
   state = {
@@ -23,8 +24,18 @@ class Register extends Form {
     name: Joi.string().min(5).max(50).required(),
   };
 
-  doSubmit = () => {
-    console.log('Submitted');
+  doSubmit = async () => {
+    try {
+      const response = await userService.register(this.state.data);
+      localStorage.setItem('token', response.headers['x-auth-token']);
+      window.location = '/';
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        const { errors } = this.state;
+        errors.username = ex.response.data;
+        this.setState({ errors });
+      }
+    }
   };
 
   render() {
