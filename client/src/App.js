@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import jwtDecode from 'jwt-decode';
 import NavBar from './components/navBar';
 import Movies from './components/movies';
 import Customers from './components/customers';
@@ -8,20 +7,19 @@ import NotFound from './components/notFound';
 import LoginForm from './components/loginForm';
 import Register from './components/registerForm';
 import Logout from './components/logout';
+import MovieForm from './components/movieForm';
+import ProtectedRoute from './components/common/protectedRoute';
 import { Route, Redirect, Switch } from 'react-router-dom';
+import auth from './services/authService';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
-import MovieForm from './components/movieForm';
 
 class App extends Component {
   state = {};
 
   componentDidMount() {
-    try {
-      const jwt = localStorage.getItem('token');
-      const user = jwtDecode(jwt);
-      this.setState({ user });
-    } catch (ex) {}
+    const user = auth.getCurrentUser();
+    this.setState({ user });
   }
 
   render() {
@@ -30,8 +28,11 @@ class App extends Component {
         <NavBar user={this.state.user} />
         <main className="container my-4">
           <Switch>
-            <Route path="/movies/:id" component={MovieForm} />
-            <Route path="/movies" component={Movies} />
+            <ProtectedRoute path="/movies/:id" component={MovieForm} />
+            <Route
+              path="/movies"
+              render={(props) => <Movies {...props} user={this.state.user} />}
+            />
             <Route path="/rentals" component={Rentals} />
             <Route path="/customers" component={Customers} />
             <Route path="/login" component={LoginForm} />
